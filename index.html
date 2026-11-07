@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Play your Android phone's music on this car's screen over Wi-Fi.">
+<meta name="theme-color" content="#14181e">
+<title>Legacy Link</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+<!--
+  Published by CI (.github/workflows/ci.yml) to the public releases repo's
+  gh-pages branch on every release, its two placeholders filled with the
+  latest STABLE release's APK link and version. The car's QR code points
+  here. Styled after the app: graphite under a soft blurred backdrop,
+  frosted glass cards, white pills, the Legacy Link accent.
+-->
+<style>
+:root{
+  --graphite:#14181e;
+  --accent:#7fe3ee; --on-accent:#062a2e;
+  --glass:rgba(255,255,255,.09); --glass-border:rgba(255,255,255,.12);
+  --text:#fff; --body:rgba(255,255,255,.78); --muted:rgba(255,255,255,.6);
+  --radius:26px; --radius-sm:20px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--graphite)}
+body{margin:0;min-height:100vh;color:var(--text);background:transparent;
+  font-family:Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* The backdrop: a blurred "cover" of soft colour, darkened toward the
+   bottom like the player's gradient. Fixed, behind everything. */
+.backdrop{position:fixed;inset:0;z-index:-1;overflow:hidden;background:var(--graphite)}
+.backdrop span{position:absolute;border-radius:50%;filter:blur(80px);opacity:.55}
+.backdrop .a{width:70vmax;height:70vmax;left:-20vmax;top:-25vmax;background:#e0785a}
+.backdrop .b{width:60vmax;height:60vmax;right:-25vmax;top:10vmax;background:#2bb3a6}
+.backdrop .c{width:55vmax;height:55vmax;left:-10vmax;bottom:-30vmax;background:#6b4fa8}
+.backdrop::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(20,24,30,.25) 0%,rgba(20,24,30,.62) 45%,rgba(20,24,30,.9) 100%)}
+
+.wrap{max-width:560px;margin-inline:auto;padding:28px 20px calc(36px + env(safe-area-inset-bottom))}
+
+.top{display:flex;align-items:center;justify-content:space-between;font-weight:500;font-size:18px}
+.top small{font-size:14px;color:var(--muted);font-weight:400}
+
+/* Phone — car, as the app draws its link. */
+.glyphs{display:flex;align-items:center;gap:10px;margin:28px 0 26px}
+.badge{flex:none;width:52px;height:52px;border-radius:16px;display:grid;place-items:center;
+  background:var(--glass);border:1px solid var(--glass-border);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.badge svg{width:26px;height:26px;color:#fff}
+.line{flex:1;height:2px;border-radius:2px;background:var(--accent);box-shadow:0 0 12px rgba(127,227,238,.55)}
+
+h1{font-size:clamp(30px,8vw,38px);line-height:1.15;font-weight:700;letter-spacing:-.01em;margin:0 0 14px;text-wrap:balance}
+.lede{font-size:17px;color:var(--body);margin:0 0 22px}
+.lede b{color:#fff;font-weight:500}
+
+.pill{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:56px;border-radius:28px;
+  background:#fff;color:#12151c;font-weight:700;font-size:17px;text-decoration:none;
+  box-shadow:0 10px 28px rgba(0,0,0,.35)}
+.pill svg{width:20px;height:20px}
+.pill:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.fine{margin:12px 0 0;text-align:center;font-size:13px;color:var(--muted)}
+
+.glass{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);
+  box-shadow:0 12px 32px rgba(0,0,0,.28);
+  -webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2)}
+
+.features{margin:22px 0 0;padding:16px 18px;display:grid;gap:12px}
+.feature{display:flex;align-items:center;gap:12px;font-size:15px}
+.feature svg{flex:none;width:20px;height:20px;color:var(--accent)}
+
+h2{font-size:24px;font-weight:700;margin:40px 0 6px}
+.sub{color:var(--body);margin:0 0 18px;font-size:16px}
+
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.step{display:flex;gap:14px;align-items:flex-start;padding:16px;border-radius:var(--radius-sm)}
+.num{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(127,227,238,.2);color:var(--accent);font-weight:700}
+.step h3{margin:4px 0 2px;font-size:17px;font-weight:500}
+.step p{margin:0;font-size:14px;line-height:1.45;color:rgba(255,255,255,.7)}
+.step p + p{margin-top:6px}
+.step kbd{font:inherit;font-weight:500;color:#fff}
+
+.why{padding:6px 18px}
+.why div{padding:12px 0;border-top:1px solid rgba(255,255,255,.08)}
+.why div:first-child{border-top:0}
+.why dt{font-weight:500;font-size:15px}
+.why dd{margin:2px 0 0;font-size:14px;color:rgba(255,255,255,.7)}
+
+.note{margin:22px 0 0;padding:14px 18px;border-radius:var(--radius-sm);font-size:14px;color:var(--body)}
+.note b{color:#fff;font-weight:500}
+
+footer{margin-top:34px;font-size:13px;color:var(--muted)}
+footer a{color:var(--accent);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+@media (prefers-reduced-motion:no-preference){
+  .pill{transition:transform .15s ease}
+  .pill:hover{transform:translateY(-1px)}
+}
+</style>
+</head>
+<body>
+<div class="backdrop" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span></div>
+
+<main class="wrap">
+  <div class="top">Legacy Link <small>Android</small></div>
+
+  <div class="glyphs" aria-hidden="true">
+    <div class="badge">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H8C6.34 1 5 2.34 5 4v16c0 1.66 1.34 3 3 3h8c1.66 0 3-1.34 3-3V4c0-1.66-1.34-3-3-3zm-2 20h-4v-1h4v1zm3.25-3H6.75V4h10.5v14z"/></svg>
+    </div>
+    <div class="line"></div>
+    <div class="badge">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+    </div>
+  </div>
+
+  <h1>Your phone's music on the car screen</h1>
+  <p class="lede">Legacy Link puts what's playing on this car's screen: album art, up next and controls. Music plays through the car's Bluetooth, or <b>bit-exact over Wi-Fi</b>. Skip and pause from the steering wheel. <b>Android phones only.</b></p>
+
+  <a class="pill" href="https://github.com/dovydasv2/Legacy_Link-releases/releases/download/v0.9.1/legacylink-v0.9.1.apk">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+    Download for Android
+  </a>
+  <p class="fine">Free · version 0.9.1 · about 8 MB · Android 9 or newer · installs directly, not from the Play Store</p>
+
+  <div class="glass features">
+    <div class="feature"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 18h2V6H7v12zm4 4h2V2h-2v20zm-8-8h2v-4H3v4zm12 4h2V6h-2v12zm4-8v4h2v-4h-2z"/></svg>Optional bit-exact Wi-Fi audio, no Bluetooth squeeze</div>
+    <div class="feature"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>Covers, up next and controls on the car</div>
+    <div class="feature"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>A local link: no account, no cloud</div>
+  </div>
+
+  <p class="glass note"><b>Rather not?</b> Bluetooth works as it always has: pair your phone with the car the normal way.</p>
+
+  <h2>Three steps, once</h2>
+  <p class="sub">After this it connects by itself every time you get in.</p>
+  <ol class="steps">
+    <li class="glass step">
+      <span class="num">1</span>
+      <div>
+        <h3>Install the app</h3>
+        <p>Tap the download, then open the file. The first time, Android asks you to allow installs from your browser: allow it once.</p>
+      </div>
+    </li>
+    <li class="glass step">
+      <span class="num">2</span>
+      <div>
+        <h3>Turn on your hotspot</h3>
+        <p>The car joins your phone's hotspot; that is how the music reaches the screen. The link itself uses no mobile data (your music app uses data as it always does).</p>
+      </div>
+    </li>
+    <li class="glass step">
+      <span class="num">3</span>
+      <div>
+        <h3>Open Legacy Link, tap <kbd>Get started</kbd></h3>
+        <p>It walks you through the rest. The first time, the car screen shows a code to confirm on your phone; allow the prompts the app explains, and play something.</p>
+      </div>
+    </li>
+  </ol>
+
+  <h2>What it asks for, and why</h2>
+  <dl class="glass why">
+    <div><dt>Hotspot</dt><dd>The car has no internet of its own. It joins your phone to receive the music.</dd></div>
+    <div><dt>Notification access</dt><dd>So the car screen can show the title, artist and cover of what's playing.</dd></div>
+    <div><dt>"Start recording or casting"</dt><dd>Only for Wi-Fi audio. Android's only way to let an app pass the sound through. Legacy Link only carries the audio to the car; nothing is recorded or saved.</dd></div>
+  </dl>
+
+  <footer>A personal project for one car. Updates arrive inside the app (Settings → About). Releases: <a href="https://github.com/dovydasv2/Legacy_Link-releases">github.com/dovydasv2/Legacy_Link-releases</a></footer>
+</main>
+</body>
+</html>
