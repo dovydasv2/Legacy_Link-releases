@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Legacy Link privacy policy: what the app uses, why, and what leaves your devices.">
+<meta name="theme-color" content="#14181e">
+<title>Legacy Link privacy policy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+<!--
+  Published by CI next to the download page (releases repo gh-pages):
+  https://dovydasv2.github.io/Legacy_Link-releases/privacy.html — the
+  privacy policy URL Google Play asks for. Keep it true to the code.
+-->
+<style>
+:root{
+  --graphite:#14181e;
+  --accent:#7fe3ee; --on-accent:#062a2e;
+  --glass:rgba(255,255,255,.09); --glass-border:rgba(255,255,255,.12);
+  --text:#fff; --body:rgba(255,255,255,.78); --muted:rgba(255,255,255,.6);
+  --radius:26px; --radius-sm:20px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--graphite)}
+body{margin:0;min-height:100vh;color:var(--text);background:transparent;
+  font-family:Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* The backdrop: a blurred "cover" of soft colour, darkened toward the
+   bottom like the player's gradient. Fixed, behind everything. */
+.backdrop{position:fixed;inset:0;z-index:-1;overflow:hidden;background:var(--graphite)}
+.backdrop span{position:absolute;border-radius:50%;filter:blur(80px);opacity:.55}
+.backdrop .a{width:70vmax;height:70vmax;left:-20vmax;top:-25vmax;background:#e0785a}
+.backdrop .b{width:60vmax;height:60vmax;right:-25vmax;top:10vmax;background:#2bb3a6}
+.backdrop .c{width:55vmax;height:55vmax;left:-10vmax;bottom:-30vmax;background:#6b4fa8}
+.backdrop::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(20,24,30,.25) 0%,rgba(20,24,30,.62) 45%,rgba(20,24,30,.9) 100%)}
+
+.wrap{max-width:560px;margin-inline:auto;padding:28px 20px calc(36px + env(safe-area-inset-bottom))}
+
+.top{display:flex;align-items:center;justify-content:space-between;font-weight:500;font-size:18px}
+.top small{font-size:14px;color:var(--muted);font-weight:400}
+
+/* Phone — car, as the app draws its link. */
+.glyphs{display:flex;align-items:center;gap:10px;margin:28px 0 26px}
+.badge{flex:none;width:52px;height:52px;border-radius:16px;display:grid;place-items:center;
+  background:var(--glass);border:1px solid var(--glass-border);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.badge svg{width:26px;height:26px;color:#fff}
+.line{flex:1;height:2px;border-radius:2px;background:var(--accent);box-shadow:0 0 12px rgba(127,227,238,.55)}
+
+h1{font-size:clamp(30px,8vw,38px);line-height:1.15;font-weight:700;letter-spacing:-.01em;margin:0 0 14px;text-wrap:balance}
+.lede{font-size:17px;color:var(--body);margin:0 0 22px}
+.lede b{color:#fff;font-weight:500}
+
+.pill{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:56px;border-radius:28px;
+  background:#fff;color:#12151c;font-weight:700;font-size:17px;text-decoration:none;
+  box-shadow:0 10px 28px rgba(0,0,0,.35)}
+.pill svg{width:20px;height:20px}
+.pill:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.fine{margin:12px 0 0;text-align:center;font-size:13px;color:var(--muted)}
+
+.glass{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);
+  box-shadow:0 12px 32px rgba(0,0,0,.28);
+  -webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2)}
+
+.features{margin:22px 0 0;padding:16px 18px;display:grid;gap:12px}
+.feature{display:flex;align-items:center;gap:12px;font-size:15px}
+.feature svg{flex:none;width:20px;height:20px;color:var(--accent)}
+
+h2{font-size:24px;font-weight:700;margin:40px 0 6px}
+.sub{color:var(--body);margin:0 0 18px;font-size:16px}
+
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.step{display:flex;gap:14px;align-items:flex-start;padding:16px;border-radius:var(--radius-sm)}
+.num{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(127,227,238,.2);color:var(--accent);font-weight:700}
+.step h3{margin:4px 0 2px;font-size:17px;font-weight:500}
+.step p{margin:0;font-size:14px;line-height:1.45;color:rgba(255,255,255,.7)}
+.step p + p{margin-top:6px}
+.step kbd{font:inherit;font-weight:500;color:#fff}
+
+.why{padding:6px 18px}
+.why div{padding:12px 0;border-top:1px solid rgba(255,255,255,.08)}
+.why div:first-child{border-top:0}
+.why dt{font-weight:500;font-size:15px}
+.why dd{margin:2px 0 0;font-size:14px;color:rgba(255,255,255,.7)}
+
+.note{margin:22px 0 0;padding:14px 18px;border-radius:var(--radius-sm);font-size:14px;color:var(--body)}
+.note b{color:#fff;font-weight:500}
+
+footer{margin-top:34px;font-size:13px;color:var(--muted)}
+footer a{color:var(--accent);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+@media (prefers-reduced-motion:no-preference){
+  .pill{transition:transform .15s ease}
+  .pill:hover{transform:translateY(-1px)}
+}
+</style>
+</head>
+<body>
+<div class="backdrop" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span></div>
+
+<main class="wrap">
+  <div class="top">Legacy Link <small>Privacy</small></div>
+
+  <h1 style="margin-top:28px">Privacy policy</h1>
+  <p class="lede">Legacy Link links your Android phone with your car's Android head unit over your own Wi-Fi. <b>It has no account, no ads, no analytics and no server of its own.</b> What it uses stays on your phone and your head unit.</p>
+  <p class="fine" style="text-align:left">Last updated 8 November 2026 · applies to the Google Play and GitHub versions</p>
+
+  <h2>What the app uses, and why</h2>
+  <dl class="glass why">
+    <div><dt>What your media apps are playing</dt><dd>Through Android's notification access: title, artist, album, album art, position and playback controls. Sent only to your head unit, so it can show and control what plays. Your other notifications are not read, stored or shared.</dd></div>
+    <div><dt>The sound your media apps play (optional Wi-Fi audio)</dt><dd>Captured through Android's screen-share permission and streamed, encrypted, straight to your head unit. Never the microphone. Nothing is recorded or stored.</dd></div>
+    <div><dt>Approximate location (optional)</dt><dd>Only to work out today's sunrise and sunset for the head unit's night mode. Only those two times go to the head unit; your location is not stored or shared.</dd></div>
+    <div><dt>Bluetooth device names</dt><dd>So you can pick which Bluetooth device is your car; Legacy Link then saves power when you're not in the car. Stored on the phone.</dd></div>
+    <div><dt>Installed apps</dt><dd>Names and icons of your media apps (to show where music is playing from), and on the head unit, its apps (to open its Bluetooth music app). Not stored beyond your settings, not shared.</dd></div>
+    <div><dt>Wi-Fi and network state</dt><dd>To find and keep the link between your phone's hotspot and the head unit.</dd></div>
+  </dl>
+
+  <h2>What leaves your devices</h2>
+  <dl class="glass why">
+    <div><dt>To your head unit only</dt><dd>Everything above travels over your phone's hotspot to your own head unit, encrypted once the two are paired. Nothing goes to the developer or any third party.</dd></div>
+    <div><dt>Album covers from your music app</dt><dd>When a music app gives only a web address for a cover, Legacy Link downloads that picture from that address, as the music app itself would.</dd></div>
+    <div><dt>Update checks (GitHub version only)</dt><dd>The GitHub version asks github.com for new versions and downloads them; GitHub sees an ordinary anonymous request. The Google Play version is updated by Google Play and makes no such requests.</dd></div>
+    <div><dt>Google Play purchases (if offered)</dt><dd>Handled entirely by Google Play; Legacy Link only learns whether a purchase was made.</dd></div>
+  </dl>
+
+  <h2>What's kept, and for how long</h2>
+  <p class="glass note">Settings, pairings, the last played track and its cover, recent album names and a local diagnostic log stay on your phone and head unit until you change them or uninstall the app. Android's own device backup may include the settings if you have backup turned on. Nothing is sold, and nothing is used for advertising.</p>
+
+  <h2>Children</h2>
+  <p class="glass note">Legacy Link is a car accessory app and is not directed at children.</p>
+
+  <h2>Changes and contact</h2>
+  <p class="glass note">If this policy changes, this page changes with it, with a new date above. Questions: <a href="https://github.com/dovydasv2/Legacy_Link-releases/issues" style="color:var(--accent)">github.com/dovydasv2/Legacy_Link-releases/issues</a></p>
+
+  <footer>Legacy Link · <a href="./">Download page</a></footer>
+</main>
+</body>
+</html>
